@@ -1,15 +1,9 @@
--- =============================================
--- RestMan Database - Complete Schema
--- =============================================
 
--- Tạo database
 DROP DATABASE IF EXISTS restman;
 CREATE DATABASE restman CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE restman;
 
--- =============================================
--- Bảng users - Quản lý người dùng
--- =============================================
+
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -21,9 +15,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- =============================================
--- Bảng customers - Thông tin khách hàng
--- =============================================
+
 CREATE TABLE customers (
     id INT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -34,9 +26,7 @@ CREATE TABLE customers (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- =============================================
--- Bảng menu_food - Danh sách món ăn
--- =============================================
+
 CREATE TABLE menu_food (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -50,9 +40,7 @@ CREATE TABLE menu_food (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- =============================================
--- Bảng tables - Quản lý bàn ăn
--- =============================================
+
 CREATE TABLE tables (
     id INT PRIMARY KEY AUTO_INCREMENT,
     table_number VARCHAR(20) NOT NULL UNIQUE,
@@ -63,9 +51,7 @@ CREATE TABLE tables (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- =============================================
--- Bảng receipts - Hóa đơn
--- =============================================
+
 CREATE TABLE receipts (
     id INT PRIMARY KEY AUTO_INCREMENT,
     table_id INT NOT NULL,
@@ -84,9 +70,7 @@ CREATE TABLE receipts (
     FOREIGN KEY (staff_id) REFERENCES users(id)
 );
 
--- =============================================
--- Bảng receipt_details - Chi tiết hóa đơn
--- =============================================
+
 CREATE TABLE receipt_details (
     id INT PRIMARY KEY AUTO_INCREMENT,
     receipt_id INT NOT NULL,
@@ -99,9 +83,7 @@ CREATE TABLE receipt_details (
     FOREIGN KEY (food_id) REFERENCES menu_food(id)
 );
 
--- =============================================
--- INSERT DỮ LIỆU MẪU
--- =============================================
+
 
 -- Users
 INSERT INTO users (username, password, email, full_name, role) VALUES
@@ -180,9 +162,7 @@ INSERT INTO receipt_details (receipt_id, food_id, quantity, unit_price, total_pr
 (4, 10, 1, 135000, 135000), -- 1 Cá hồi nướng
 (4, 9, 1, 45000, 45000);    -- 1 Salad
 
--- =============================================
--- VIEWS VÀ PROCEDURES HỖ TRỢ
--- =============================================
+
 
 -- View: Thông tin hóa đơn đầy đủ
 CREATE VIEW v_receipt_full_info AS
@@ -215,6 +195,3 @@ SELECT
 FROM receipt_details rd
 JOIN menu_food mf ON rd.food_id = mf.id;
 
--- =============================================
--- KẾT THÚC SCRIPT
--- =============================================
